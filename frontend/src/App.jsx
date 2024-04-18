@@ -6,6 +6,7 @@ import UpdatePhoto from "./pages/UpdatePhoto";
 import Header from "./components/Header";
 import Photo from "./pages/Photo";
 import Search from "./pages/Search";
+import AllPhotos from "./pages/AllPhotos";
 
 export default function App() {
   return (
@@ -17,6 +18,7 @@ export default function App() {
         <Route path="/photo/:photoId" element={<Photo />} />
         <Route path="/update-photo/:photoId" element={<UpdatePhoto />} />
         <Route path="/search" element={<Search />} />
+        <Route path="/all-photos" element={<AllPhotos />} />
       </Routes>
     </BrowserRouter>
   );

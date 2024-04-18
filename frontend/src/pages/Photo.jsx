@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { getPhotoById, deletePhoto } from "../client";
+import { useNavigate } from "react-router-dom";
 
 export default function Photo() {
   const [photo, setPhoto] = useState(null);
@@ -8,6 +9,7 @@ export default function Photo() {
   const [error, setError] = useState(false);
 
   const params = useParams();
+  const navigate = useNavigate();
 
   const handlePhotoDelete = async (photoId) => {
     try {
@@ -15,6 +17,7 @@ export default function Photo() {
       if (data.success === false) {
         return;
       }
+      navigate("/");
     } catch (error) {
       console.log(error.message);
     }

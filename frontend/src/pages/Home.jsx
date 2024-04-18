@@ -1,14 +1,8 @@
-
 import { Link } from "react-router-dom";
-
 
 // import { getPhotos } from "../client";
 
-
 export default function Home() {
- 
-
-  
   return (
     <div>
       {/* top */}
@@ -17,29 +11,24 @@ export default function Home() {
        max-w-6xl mx-auto"
       >
         <h1 className="text-slate-700 font-bold text-3xl lg:text-6xl">
-          Find all <span className="text-slate-500">home</span>
+          Find <span className="text-slate-500">amazing</span>
           <br />
-          amazing photos
+          photos here
         </h1>
         <div className="text-gray-400 text-xs sm:text-xl">
-          Browse are photos
+          Browse all the photos
           <br />
           You can upload your own photos
         </div>
-        <Link to={"/search"} className="text-xl sm:text-xl text-blue-800 font-bold hover:underline">
+        <Link
+          to={"/search"}
+          className="text-xl sm:text-xl text-blue-800 font-bold hover:underline"
+        >
           Search Now..
         </Link>
       </div>
 
-    
-
-      
-
-      <div className="max-w-6xl mx-auto p-3 flex flex-col gap-8 my-10">
-       
-        
-       
-      </div>
+      <div className="max-w-6xl mx-auto p-3 flex flex-col gap-8 my-10"></div>
     </div>
   );
 }

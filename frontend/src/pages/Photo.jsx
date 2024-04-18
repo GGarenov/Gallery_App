@@ -13,7 +13,6 @@ export default function Photo() {
     try {
       const data = await deletePhoto(photoId);
       if (data.success === false) {
-        console.log(data.message);
         return;
       }
     } catch (error) {
@@ -26,14 +25,14 @@ export default function Photo() {
       try {
         setLoading(true);
         const data = await getPhotoById({ photoId: params.photoId });
-        console.log(data);
+
         if (data.success === false) {
           setError(true);
           setLoading(false);
           return;
         }
         setPhoto(data);
-        console.log(data.imageUrls[0]);
+
         setLoading(false);
         setError(false);
       } catch (error) {
@@ -58,15 +57,17 @@ export default function Photo() {
             <span className="font-semibold text-black">Description - </span>
             {photo.description}
           </p>
-          <div className="flex flex-col item-center">
+          <div className="flex items-center gap-4">
             <button
               onClick={() => handlePhotoDelete(photo._id)}
-              className="text-red-700 uppercase"
+              className="text-red-700 uppercase border border-red-700 px-4 py-2"
             >
               Delete
             </button>
             <Link to={`/update-photo/${photo._id}`}>
-              <button className="text-green-700 uppercase">Edit</button>
+              <button className="text-green-700 uppercase border border-green-700 px-4 py-2">
+                Edit
+              </button>
             </Link>
           </div>
         </div>

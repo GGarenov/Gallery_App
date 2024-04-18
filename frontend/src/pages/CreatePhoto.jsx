@@ -22,7 +22,7 @@ export default function CreatePhoto() {
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const handleImageSubmit = (e) => {
+  const handleImageSubmit = () => {
     if (files.length > 0 && files.length + formData.imageUrls.length < 3) {
       setUploading(true);
       setImageUploadError(false);
@@ -40,7 +40,7 @@ export default function CreatePhoto() {
           setImageUploadError(false);
           setUploading(false);
         })
-        .catch((err) => {
+        .catch(() => {
           setImageUploadError("Image upload failed (2 mb max per image)");
           setUploading(false);
         });

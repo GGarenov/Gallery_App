@@ -5,45 +5,45 @@ export const createPhoto = async (req, res, next) => {
     const photo = await Photo.create(req.body);
     return res.status(201).json(photo);
   } catch (error) {
-    next(error);
+    res.status(500).json({ message: error.message });
   }
 };
 
 export const getPhoto = async (req, res, next) => {
   try {
     const photo = await Photo.findById(req.params.id);
-    console.log(photo);
+
     if (!photo) {
-      return next(errorHandler(404, "Photo not found!"));
+      return res.status(404).json({ message: "Photo not found!" });
     }
     res.status(200).json(photo);
   } catch (error) {
-    next(error);
+    res.status(500).json({ message: error.message });
   }
 };
 
 export const deletePhoto = async (req, res, next) => {
-  const photo = await Photo.findById(req.params.id);
-
-  if (!photo) {
-    return next(errorHandler(404, "Photo not found!"));
-  }
-
   try {
+    const photo = await Photo.findById(req.params.id);
+
+    if (!photo) {
+      return res.status(404).json({ message: "Photo not found!" });
+    }
+
     await Photo.findByIdAndDelete(req.params.id);
-    res.status(200).json("Photo has been deleted!");
+    res.status(200).json({ message: "Photo has been deleted!" });
   } catch (error) {
-    next(error);
+    res.status(500).json({ message: error.message });
   }
 };
 
 export const updatePhoto = async (req, res, next) => {
-  const photo = await Photo.findById(req.params.id);
-  if (!photo) {
-    return next(errorHandler(404, "Photo not found!"));
-  }
-
   try {
+    const photo = await Photo.findById(req.params.id);
+    if (!photo) {
+      return res.status(404).json({ message: "Photo not found!" });
+    }
+
     const updatedPhoto = await Photo.findByIdAndUpdate(
       req.params.id,
       req.body,
@@ -51,7 +51,7 @@ export const updatePhoto = async (req, res, next) => {
     );
     res.status(200).json(updatedPhoto);
   } catch (error) {
-    next(error);
+    res.status(500).json({ message: error.message });
   }
 };
 
@@ -75,6 +75,6 @@ export const getPhotos = async (req, res, next) => {
 
     return res.status(200).json(photos);
   } catch (error) {
-    next(error);
+    res.status(500).json({ message: error.message });
   }
 };

@@ -1,18 +1,21 @@
 import { useState } from "react";
-import { getDownloadURL, getStorage, ref, uploadBytesResumable } from "firebase/storage";
+import {
+  getDownloadURL,
+  getStorage,
+  ref,
+  uploadBytesResumable,
+} from "firebase/storage";
 import { app } from "../firebase";
 import { useNavigate } from "react-router-dom";
 import { createPhoto } from "../client";
 
 export default function CreatePhoto() {
-  
   const navigate = useNavigate();
   const [files, setFiles] = useState([]);
   const [formData, setFormData] = useState({
     imageUrls: [],
     name: "",
     description: "",
-    
   });
   const [imageUploadError, setImageUploadError] = useState(false);
   const [uploading, setUploading] = useState(false);
@@ -56,7 +59,8 @@ export default function CreatePhoto() {
       uploadTask.on(
         "state_changed",
         (snapshot) => {
-          const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+          const progress =
+            (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
           console.log(`Upload is ${progress}% done`);
         },
         (error) => {
@@ -79,21 +83,11 @@ export default function CreatePhoto() {
   };
 
   const handleChange = (e) => {
-    if (e.target.id === "sale" || e.target.id === "rent") {
-      setFormData({
-        ...formData,
-        type: e.target.id,
-      });
-    }
-
-    if (e.target.id === "parking" || e.target.id === "furnished" || e.target.id === "offer") {
-      setFormData({
-        ...formData,
-        [e.target.id]: e.target.checked,
-      });
-    }
-
-    if (e.target.type === "number" || e.target.type === "text" || e.target.type === "textarea") {
+    if (
+      e.target.type === "number" ||
+      e.target.type === "text" ||
+      e.target.type === "textarea"
+    ) {
       setFormData({
         ...formData,
         [e.target.id]: e.target.value,
@@ -104,9 +98,9 @@ export default function CreatePhoto() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      if (formData.imageUrls.length < 1) return setError("You must upload at least one image");
-      if (+formData.regularPrice < +formData.discountPrice)
-        return setError("Discount price must be lower than regular price");
+      if (formData.imageUrls.length < 1)
+        return setError("You must upload at least one image");
+
       setLoading(true);
       setError(false);
       const data = await createPhoto(formData);
@@ -122,7 +116,9 @@ export default function CreatePhoto() {
   };
   return (
     <main className="p-3 max-w-4xl mx-auto">
-      <h1 className="text-3xl font-semibold text-center my-7">Upload a Photo</h1>
+      <h1 className="text-3xl font-semibold text-center my-7">
+        Upload a Photo
+      </h1>
       <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-4">
         <div className="flex flex-col gap-4 flex-1">
           <input
@@ -131,7 +127,7 @@ export default function CreatePhoto() {
             className="border p-3 rounded-lg"
             id="name"
             maxLength="62"
-            minLength="10"
+            minLength="1"
             required
             onChange={handleChange}
             value={formData.name}
@@ -145,12 +141,13 @@ export default function CreatePhoto() {
             onChange={handleChange}
             value={formData.description}
           />
-         
         </div>
         <div className="flex flex-col flex-1 gap-4">
           <p className="font-semibold">
             Images:
-            <span className="font-normal text-gray-600 ml-2">The first image will be the cover (max 6)</span>
+            <span className="font-normal text-gray-600 ml-2">
+              You can only upload 1 image
+            </span>
           </p>
           <div className="flex gap-4">
             <input
@@ -170,11 +167,20 @@ export default function CreatePhoto() {
               {uploading ? "Uploading..." : "Upload"}
             </button>
           </div>
-          <p className="text-red-700 text-sm">{imageUploadError && imageUploadError}</p>
+          <p className="text-red-700 text-sm">
+            {imageUploadError && imageUploadError}
+          </p>
           {formData.imageUrls.length > 0 &&
             formData.imageUrls.map((url, index) => (
-              <div key={url} className="flex justify-between p-3 border items-center">
-                <img src={url} alt="photo image" className="w-20 h-20 object-contain rounded-lg" />
+              <div
+                key={url}
+                className="flex justify-between p-3 border items-center"
+              >
+                <img
+                  src={url}
+                  alt="photo image"
+                  className="w-20 h-20 object-contain rounded-lg"
+                />
                 <button
                   type="button"
                   onClick={() => handleRemoveImage(index)}

@@ -1,7 +1,5 @@
 import Photo from "../models/photos.model.js";
 
-
-
 export const createPhoto = async (req, res, next) => {
   try {
     const photo = await Photo.create(req.body);
@@ -13,7 +11,8 @@ export const createPhoto = async (req, res, next) => {
 
 export const getPhoto = async (req, res, next) => {
   try {
-    const photo = await Photo.findById(req.params._id);
+    const photo = await Photo.findById(req.params.id);
+    console.log(photo);
     if (!photo) {
       return next(errorHandler(404, "Photo not found!"));
     }
@@ -30,7 +29,6 @@ export const deletePhoto = async (req, res, next) => {
     return next(errorHandler(404, "Photo not found!"));
   }
 
-  
   try {
     await Photo.findByIdAndDelete(req.params.id);
     res.status(200).json("Photo has been deleted!");
@@ -44,10 +42,13 @@ export const updatePhoto = async (req, res, next) => {
   if (!photo) {
     return next(errorHandler(404, "Photo not found!"));
   }
-  
 
   try {
-    const updatedPhoto = await Photo.findByIdAndUpdate(req.params.id, req.body, { new: true });
+    const updatedPhoto = await Photo.findByIdAndUpdate(
+      req.params.id,
+      req.body,
+      { new: true }
+    );
     res.status(200).json(updatedPhoto);
   } catch (error) {
     next(error);
@@ -58,7 +59,6 @@ export const getPhotos = async (req, res, next) => {
   try {
     const limit = parseInt(req.query.limit) || 9;
     const startIndex = parseInt(req.query.startIndex) || 0;
-    
 
     const searchTerm = req.query.searchTerm || "";
 
@@ -68,7 +68,6 @@ export const getPhotos = async (req, res, next) => {
 
     const photos = await Photo.find({
       name: { $regex: searchTerm, $options: "i" },
-      
     })
       .sort({ [sort]: order })
       .limit(limit)

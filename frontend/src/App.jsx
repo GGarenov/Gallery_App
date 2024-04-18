@@ -1,12 +1,9 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Home from "./pages/Home";
-import CreatePhoto from "./pages/CreatePhoto"
+import CreatePhoto from "./pages/CreatePhoto";
 
-// import SignIn from "./pages/SignIn";
-// import SignUp from "./pages/SignUp";
-// import About from "./pages/About";
-// import Profile from "./pages/Profile";
 import Header from "./components/Header";
+import Photo from "./pages/Photo";
 
 export default function App() {
   return (
@@ -15,9 +12,7 @@ export default function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/create-photo" element={<CreatePhoto />} />
-        {/* <Route path="/sign-up" element={<SignUp />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/profile" element={<Profile />} />  */}
+        <Route path="/photo/:photoId" element={<Photo />} />
       </Routes>
     </BrowserRouter>
   );
